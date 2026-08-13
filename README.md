@@ -7,14 +7,13 @@
        ┌─────────────────────────────┐
        │                             ▼
   ┌─────────────┐                ┌──────────────────┐
-  │ User / CLI  │                │ controller_node  │
-  └─────────────┘                │                  │
-       ││ 
+  │ User / CLI  │                │                  │
+  └─────────────┘                │  controller_node │
          │ Action: /go_to_point  │                  │
          └──────────────────────►│                  │
                                  └───────┬─────┬────┘
                                          │     │
-                        Topic: /quad/pose     │ Topic: /quad/velocity
+                         Topic: /quad/pose     │ Topic: /quad/velocity
                                          │     │
                                          ▼     ▼
                                   ┌─────────────────┐
