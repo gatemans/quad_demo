@@ -20,3 +20,8 @@
                                   │  monitor_node   │
                                   └─────────────────┘
 ```
+
+# first soure the env
+```
+source /opt/ros/humble/setup.bash
+```
