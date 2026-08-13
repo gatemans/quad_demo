@@ -4,24 +4,31 @@ this is a simple ros project for exaplaining of "node" , "topic" , "Action" and 
 
 
 
-```
-                 Service: /set_start
-       ┌─────────────────────────────┐
-       │                             ▼
-  ┌─────────────┐                ┌──────────────────┐
-  │ User / CLI  │                │                  │
-  └─────────────┘                │  controller_node │
-         │ Action: /go_to_point  │                  │
-         └──────────────────────►│                  │
-                                 └───────┬─────┬────┘
-                                         │     │
-                         Topic: /quad/pose     │ Topic: /quad/velocity
-                                         │     │
-                                         ▼     ▼
-                                  ┌─────────────────┐
-                                  │  monitor_node   │
-                                  └─────────────────┘
-```
+
+                         ┌─────────────────────────────┐
+                         │  go_to_point.py             │
+                         │  Action Client              │
+                         └──────────────┬──────────────┘
+                                        │ Action Goal
+                                        ▼
+                         ┌─────────────────────────────┐
+                         │  controller.py              │
+                         │  Action Server + Controller │
+                         └──────────────┬──────────────┘
+                                        │ /drone/cmd_vel
+                                        │ Topic
+                                        ▼
+┌───────────────────┐   ┌─────────────────────────────┐
+│ telemetry_monitor │◄──│  drone_sim.py               │
+└───────────────────┘   │                             │
+       ▲                └──────────┬──────────┬───────┘
+       │                           │          │
+       │ /drone/pose               │          │ Services
+       │ /drone/velocity           │          ├─ /drone/arm
+       │ Topics                    │          └─ /drone/set_pose
+       └───────────────────────────┘
+
+
 
 # first soure the env
 ```
@@ -39,10 +46,16 @@ printenv ROS_DISTRO
 ```
 
 # Make the wrk space
+‍‍```
+
 ```
-mkdir -p ~/quad_ws/src
-cd ~/quad_ws/src
+
 ```
+ros2 pkg create quad_interfaces --build-type ament_cmake
+ros2 pkg create quad_control --build-type ament_python --dependencies rclpy geometry_msgs std_srvs
+
+```
+the structure
 
 ```
 quad_ws/
@@ -53,6 +66,23 @@ quad_ws/
 ├── install/
 └── log/
 ```
+# quad_interfaces Package:
+```
+mkdir -p ~/quad_ws/src/quad_interfaces
+cd ~/quad_ws/src/quad_interfaces
+mkdir srv action
+
+```
+
+source file:
+```
+nano srv/SetStart.srv
+```
+action file:
+```
+nano action/GoToPoint.action
+```
+
 
 
 
