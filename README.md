@@ -1,2 +1,22 @@
-# quad_demo
-simple demo of quarrotor in ros lecture
+## quad_demo
+# simple demo of quarrotor in ros lecture
+
+
+
+                 Service: /set_start
+       ┌─────────────────────────────┐
+       │                             ▼
+┌─────────────┐                ┌──────────────────┐
+│ User / CLI  │                │ controller_node  │
+└─────────────┘                │                  │
+       │                       │  مدل حرکت ساده   │
+       │ Action: /go_to_point  │                  │
+       └──────────────────────►│                  │
+                               └───────┬─────┬────┘
+                                       │     │
+                      Topic: /quad/pose     │ Topic: /quad/velocity
+                                       │     │
+                                       ▼     ▼
+                                ┌─────────────────┐
+                                │  monitor_node   │
+                                └─────────────────┘
