@@ -1,5 +1,7 @@
 ## quad_demo
 # simple demo of quarrotor in ros lecture
+this is a simple ros project for exaplaining of "node" , "topic" , "Action" and "service" 
+
 
 
 ```
