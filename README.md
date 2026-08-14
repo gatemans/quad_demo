@@ -36,8 +36,7 @@ source /opt/ros/humble/setup.bash
 ```
 To make this setting permanent:
 ```
-echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
-source ~/.bashrc
+echo "source /opt/ros/humble/setup.bash" 
 ```
 
 and check version
@@ -46,25 +45,26 @@ printenv ROS_DISTRO
 ```
 
 # Make the wrk space
-‍‍```
-
 ```
-
+mkdir -p ~/quad_ws/src
+cd ~/quad_ws
 ```
-ros2 pkg create quad_interfaces --build-type ament_cmake
-ros2 pkg create quad_control --build-type ament_python --dependencies rclpy geometry_msgs std_srvs
+```
+cd ~/quad_ws/src
+ros2 pkg create --build-type ament_cmake quad_interfaces --dependencies geometry_msgs
 
 ```
 the structure
 
 ```
-quad_ws/
-├── src/
-│   ├── quad_interfaces/
-│   └── quad_controller/
-├── build/
-├── install/
-└── log/
+quad_control/
+├── package.xml
+├── resource/
+├── setup.cfg
+├── setup.py
+└── quad_control/
+    └── __init__.py
+
 ```
 # quad_interfaces Package:
 ```
@@ -74,18 +74,42 @@ mkdir srv action
 
 ```
 
-source file:
+# Creating an Action named GoTo
 ```
-nano srv/SetStart.srv
+geometry_msgs/Point target
+float32 cruise_speed
+
+---
+==
+bool success
+string message
+
+---
+
+geometry_msgs/Point current_position
+float32 current_speed
+float32 distance_remaining
+
 ```
-action file:
+# Create a Service named SetPose:
 ```
-nano action/GoToPoint.action
+geometry_msgs/Point pose
+---
+bool success
+string message
+
 ```
+# Edit the CMakeLists.txt and  package.xml of the Interface package:
 
 
-
-
+- - - - - 
+# Add three Python files to it:
+```
+cd ~/quad_ws/src/quad_control/quad_control
+touch quad_controller.py
+touch state_monitor.py
+touch mission_manager.py
+```
 
 
 
